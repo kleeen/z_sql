@@ -1,0 +1,8 @@
+{application, z_sql,
+ [{description, "MySQL/PostgreSQL library"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {applications, [kernel,stdlib]},
+  {mod, {z_sql_app, []}},
+  {env, []}
+ ]}.
