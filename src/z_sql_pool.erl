@@ -15,6 +15,7 @@
 
 -export([start_link/3,
 		 db_type/1,
+		 db_schema/1,
 		 get_connection/1,
 		 get_connection/2
 		]).
@@ -43,6 +44,9 @@ get_connection(Pool, Type) ->
 
 db_type(Pool) ->
 	gen_server:call(Pool, db_type).
+
+db_schema(Pool) ->
+	gen_server:call(Pool, db_schema).
 
 %% init/1
 %% ====================================================================
@@ -95,6 +99,9 @@ handle_call({get_connection,roundrobin}, _From, #state{ptr = Ptr, active_pids = 
 	Pid = lists:nth(Ptr0, Actives),
 	Ptr1 = Ptr0 + 1,
 	{reply, {ok, Pid}, State#state{ptr = Ptr1}};
+
+handle_call(db_schema, _From, State) ->
+	{reply, element(4,State#state.start_args), State};
 
 handle_call(db_type, _From, State) ->
 	{reply, element(1,State#state.start_args), State};
