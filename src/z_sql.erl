@@ -525,7 +525,7 @@ sql_query_internal(F) when is_function(F) ->
     end;
 sql_query_internal(Query) ->
     State = get(?STATE_KEY),
-    ?DEBUG("SQL: \"~s\"", [Query]),
+%%    ?DEBUG("SQL: \"~s\"", [Query]),
     Res = case State#state.db_type of
 			  pgsql ->
 				  pgsql_to_odbc(pgsql:squery(State#state.db_ref, Query));
