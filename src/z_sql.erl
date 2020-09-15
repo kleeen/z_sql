@@ -235,7 +235,7 @@ decode_term(Bin) ->
 %%%----------------------------------------------------------------------
 init({Args, Options}) ->
 	StartInterval = opt(sql_start_interval, Options, 30000),
-    KeepaliveInterval =  opt(sql_keepalive_interval, Options, 30000),
+    KeepaliveInterval =  opt(sql_keepalive_interval, Options, 600),
     timer:apply_interval(KeepaliveInterval * 1000, ?MODULE,keep_alive, [self()]),
     {DBType, Server, Port, Schema, User, Pass} = Args,
     (?GEN_FSM):send_event(self(), connect),
