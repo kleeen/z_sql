@@ -444,10 +444,9 @@ outer_transaction(F, NRestarts, _Reason) ->
       {aborted, Reason} when NRestarts =:= 0 ->
 	  ?ERROR("SQL transaction restarts exceeded~n** "
 		     "Restarts: ~p~n** Last abort reason: "
-		     "~p~n** Stacktrace: ~p~n** When State "
+		     "~p~n** When State "
 		     "== ~p",
-		     [?MAX_TRANSACTION_RESTARTS, Reason,
-		      erlang:get_stacktrace(), get(?STATE_KEY)]),
+		     [?MAX_TRANSACTION_RESTARTS, Reason, get(?STATE_KEY)]),
 	  sql_query_internal([<<"rollback;">>]),
 	  {aborted, Reason};
       {'EXIT', Reason} ->
@@ -507,8 +506,7 @@ sql_query_internal(#sql_query{} = Query) ->
                     generic_sql_query(Query)
             end
         catch
-            Class:Reason ->
-                ST = erlang:get_stacktrace(),
+            Class:Reason:ST ->
                 ?ERROR("Internal error while processing SQL query: ~p",
                            [{Class, Reason, ST}]),
                 {error, <<"internal error">>}
@@ -623,8 +621,7 @@ sql_query_format_res({selected, _, Rows}, SQLQuery) ->
                   try
                       [(SQLQuery#sql_query.format_res)(Row)]
                   catch
-                      Class:Reason ->
-                          ST = erlang:get_stacktrace(),
+                      Class:Reason:ST ->
                           ?ERROR("Error while processing "
                                      "SQL query result: ~p~n"
                                      "row: ~p",

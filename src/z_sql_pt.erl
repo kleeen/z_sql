@@ -134,7 +134,7 @@ top_transform(Forms) when is_list(Forms) ->
                   Form3 = erl_syntax:revert(Form2),
                   Form3
 	      catch
-		  throw:{error, Line, Error} ->
+		  throw:{error, Line, Error}:_ ->
 		      {error, {Line, erl_parse, Error}}
 	      end
       end, Forms).
