@@ -9,7 +9,7 @@
 %% start/2
 %% ====================================================================
 %% @doc <a href="http://www.erlang.org/doc/apps/kernel/application.html#Module:start-2">application:start/2</a>
--spec start(Type :: normal | {takeover, Node} | {failover, Node}, Args :: term()) ->
+-spec start(Type :: normal | {takeover, term()} | {failover, term()}, Args :: term()) ->
 	{ok, Pid :: pid()}
 	| {ok, Pid :: pid(), State :: term()}
 	| {error, Reason :: term()}.
